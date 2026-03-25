@@ -1,0 +1,20 @@
+﻿@page
+@model Web.Pages.Producto.IndexModel
+@{
+}
+<h1>Listado de Productos</h1>
+
+<div class="row">
+	@if(Model.productos != null)
+	@foreach (var producto in Model.productos)
+	{
+		<div class="card">
+			<p>@Html.DisplayFor(modelo => producto.Nombre)</p>
+				<p>@Html.DisplayFor(modelo => producto.Descripcion)</p>
+				<p>@Html.DisplayFor(modelo => producto.Precio)</p>
+				<p>@Html.DisplayFor(modelo => producto.Stock)</p>
+				<p>@Html.DisplayFor(modelo => producto.CodigoBarras)</p>
+		</div>
+	}
+	
+	</div>
