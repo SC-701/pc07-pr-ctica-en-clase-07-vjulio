@@ -3,18 +3,26 @@
 @{
 }
 <h1>Listado de Productos</h1>
-
+<div class="container">
 <div class="row">
 	@if(Model.productos != null)
 	@foreach (var producto in Model.productos)
 	{
+		<div class="col-md-4 mb-4">
 		<div class="card">
-			<p>@Html.DisplayFor(modelo => producto.Nombre)</p>
-				<p>@Html.DisplayFor(modelo => producto.Descripcion)</p>
-				<p>@Html.DisplayFor(modelo => producto.Precio)</p>
-				<p>@Html.DisplayFor(modelo => producto.Stock)</p>
-				<p>@Html.DisplayFor(modelo => producto.CodigoBarras)</p>
+			<div class="card-body">
+							<h5 class="card-title">@Html.DisplayFor(modelo => producto.Nombre)</h5>
+							<h6 class="card-subtitle mb-2 text-muted">@Html.DisplayFor(modelo => producto.Descripcion)</h6>
+							<p class="card-text"><strong>Precio: </strong>@Html.DisplayFor(modelo => producto.Precio)</p>
+							<p class="card-text"><strong>En Dólares: </strong>@Html.DisplayFor(modelo => producto.PrecioUSD)</p>
+							<p class="card-text"><strong>Stock: </strong>@Html.DisplayFor(modelo => producto.Stock)</p>
+							<p class="card-text"><strong>Código: </strong>@Html.DisplayFor(modelo => producto.CodigoBarras)</p>
+							<a type="button" class="btn btn-primary" asp-page="./Detalle" asp-route-id="@producto.Id">Detalle</a>
+							<a type="button" class="btn btn-warning" asp-page="./Detalle" asp-route-id="@producto.Id">Editar</a>
+							<a type="button" class="btn btn-danger" asp-page="./Detalle" asp-route-id="@producto.Id">Eliminar</a>
+						</div>
 		</div>
+				</div>
 	}
-	
+	</div>
 	</div>
