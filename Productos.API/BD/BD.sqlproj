@@ -71,5 +71,15 @@
     <Build Include="dbo\Stored Procedures\Eliminar.sql" />
     <Build Include="dbo\Stored Procedures\Editar.sql" />
     <Build Include="dbo\Stored Procedures\Agregar.sql" />
+    <Build Include="dbo\Stored Procedures\SubcategoriaObtener.sql" />
+    <Build Include="dbo\Stored Procedures\SubcategoriaObtenerId.sql" />
+    <Build Include="dbo\Stored Procedures\SubcategoriaAgregar.sql" />
+    <Build Include="dbo\Stored Procedures\SubcategoriaEliminar.sql" />
+    <Build Include="dbo\Stored Procedures\SubcategoriaEditar.sql" />
+    <Build Include="dbo\Stored Procedures\TcategoriaObtener.sql" />
+    <Build Include="dbo\Stored Procedures\TcategoriaObtenerId.sql" />
+    <Build Include="dbo\Stored Procedures\TcategoriaAgregar.sql" />
+    <Build Include="dbo\Stored Procedures\TcategoriaEditar.sql" />
+    <Build Include="dbo\Stored Procedures\TcategoriaEliminar.sql" />
   </ItemGroup>
 </Project>

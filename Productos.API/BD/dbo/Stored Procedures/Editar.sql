@@ -1,8 +1,4 @@
-﻿-- =============================================
--- Author:		<Author,,Name>
--- Create date: <Create Date,,>
--- Description:	<Description,,>
--- =============================================
+﻿
 CREATE   PROCEDURE Editar
 (
     @Id UNIQUEIDENTIFIER,

@@ -1,15 +1,20 @@
 ﻿
-CREATE   PROCEDURE Eliminar
+CREATE PROCEDURE SubcategoriaEliminar
 (
     @Id UNIQUEIDENTIFIER
 )
 AS
 BEGIN
     SET NOCOUNT ON;
+
     BEGIN TRANSACTION
+
     DELETE
-    FROM dbo.Producto
+    FROM dbo.SubCategorias
     WHERE Id = @Id;
+
     SELECT @Id
+
     COMMIT TRANSACTION
 END
+GO

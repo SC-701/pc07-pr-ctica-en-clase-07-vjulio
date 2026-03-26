@@ -23,6 +23,12 @@ builder.Services.AddHttpClient<ITipoCambioServicio, TipoCambioServicio>();
 builder.Services.AddScoped<ITipoCambioServicio, TipoCambioServicio>();
 builder.Services.AddScoped<IProductoReglas, ProductoReglas>();
 
+builder.Services.AddScoped<ICategoriaFlujo, CategoriaFlujo>();
+builder.Services.AddScoped<ICategoriaDA, CategoriaDA>();
+
+builder.Services.AddScoped<ISubCategoriaFlujo, SubCategoriaFlujo>();
+builder.Services.AddScoped<ISubCategoriaDA, SubCategoriaDA>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
