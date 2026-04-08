@@ -28,7 +28,7 @@ namespace Abstracciones.Modelos
         [Required(ErrorMessage = "El código de barras es obligatorio.")]
         [StringLength(50, ErrorMessage = "El código de barras no puede superar los 50 caracteres.")]
         public string CodigoBarras { get; set; }
-        public decimal PrecioUSD { get; set; }
+        
     }
 
     public class ProductoRequest : ProductoBase
@@ -36,11 +36,18 @@ namespace Abstracciones.Modelos
         [Required(ErrorMessage = "La subcategoría es obligatoria.")]
         public Guid IdSubCategoria { get; set; }
     }
-
-    public class ProductoResponse : ProductoBase
+    public class ProductoRequest2 : ProductoBase
+    {
+        
+        public decimal PrecioUSD { get; set; }
+    }
+    
+    public class ProductoResponse : ProductoRequest2
     {
         public Guid Id { get; set; }
         public string SubCategoria { get; set; }
         public string Categoria { get; set; }
+
+       
     }
 }

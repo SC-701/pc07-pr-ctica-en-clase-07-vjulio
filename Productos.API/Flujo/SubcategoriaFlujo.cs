@@ -38,7 +38,10 @@ namespace Flujo
         {
             return subCategoriaDA.Obtener();
         }
-
+        public Task<IEnumerable<SubCategoriaResponse>> ObtenerPorCategoria(Guid IdCategoria)
+        {
+            return subCategoriaDA.ObtenerPorCategoria(IdCategoria);
+        }
         public async Task<SubCategoriaResponse> ObtenerId(Guid Id)
         {
             var subcategoria = await subCategoriaDA.ObtenerId(Id);

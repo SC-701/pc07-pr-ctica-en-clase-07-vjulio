@@ -81,5 +81,6 @@
     <Build Include="dbo\Stored Procedures\TcategoriaAgregar.sql" />
     <Build Include="dbo\Stored Procedures\TcategoriaEditar.sql" />
     <Build Include="dbo\Stored Procedures\TcategoriaEliminar.sql" />
+    <Build Include="dbo\Stored Procedures\SubcategoriaObtenerporCategoria.sql" />
   </ItemGroup>
 </Project>

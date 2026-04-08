@@ -73,6 +73,15 @@ namespace DA
             return resultadoConsulta;
         }
 
+        public async Task<IEnumerable<SubCategoriaResponse>> ObtenerPorCategoria(Guid IdCategoria)
+        {
+            string query = @"SubcategoriaObtenerporCategoria";
+
+            var resultadoConsulta = await _sqlConnection.QueryAsync<SubCategoriaResponse>(query,
+                new { IdCategoria = IdCategoria});
+            
+            return resultadoConsulta;
+        }
         public async Task<SubCategoriaResponse> ObtenerId(Guid Id)
         {
             string query = @"SubcategoriaObtenerId";
@@ -89,5 +98,7 @@ namespace DA
             if (resultado == null)
                 throw new Exception("No se encontró la subcategoría");
         }
+
+
     }
 }

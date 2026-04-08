@@ -51,6 +51,16 @@ namespace API.Controllers
             return Ok(resultado);
         }
 
+        [HttpGet("porCategoria/{IdCategoria}")]
+        public async Task<IActionResult> ObtenerPorCategoria(Guid IdCategoria)
+        {
+            var resultado = await _subCategoriaFlujo.ObtenerPorCategoria(IdCategoria);
+            if (!resultado.Any())
+                return NoContent();
+
+            return Ok(resultado);
+        }
+
         [HttpGet("{Id}")]
         public async Task<IActionResult> ObtenerId(Guid Id)
         {

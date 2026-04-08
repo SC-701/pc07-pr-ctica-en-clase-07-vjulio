@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -27,6 +28,7 @@ namespace Abstracciones.Modelos
 
         [Required(ErrorMessage = "El código de barras es obligatorio.")]
         [StringLength(50, ErrorMessage = "El código de barras no puede superar los 50 caracteres.")]
+        [DisplayName("Código de Barras")]
         public string? CodigoBarras { get; set; }
         public decimal PrecioUSD { get; set; }
     }

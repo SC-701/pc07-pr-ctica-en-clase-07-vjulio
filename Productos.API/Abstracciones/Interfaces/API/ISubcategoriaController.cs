@@ -9,6 +9,7 @@ namespace Abstracciones.Interfaces.API
     {
         Task<IActionResult> Obtener();
         Task<IActionResult> ObtenerId(Guid Id);
+        Task<IActionResult> ObtenerPorCategoria(Guid IdCategoria);
         Task<IActionResult> Agregar(SubCategoriaRequest subcategoria);
         Task<IActionResult> Editar(Guid Id, SubCategoriaRequest subcategoria);
         Task<IActionResult> Eliminar(Guid Id);

@@ -8,19 +8,22 @@ using System.Text.Json;
 
     namespace Web.Pages.Producto
     {
-        public class AgregarModel : PageModel
+        public class EditarModel : PageModel
         {
             private readonly IConfiguracion _configuracion;
 
-            public AgregarModel(IConfiguracion configuracion)
+            public EditarModel(IConfiguracion configuracion)
             {
                 _configuracion = configuracion;
             }
 
             [BindProperty]
-            public ProductoRequest producto { get; set; }
+            public ProductoRequest productoRequest { get; set; }
+        
+        [BindProperty]
+        public ProductoResponse productoResponse { get; set; }
 
-            [BindProperty]
+        [BindProperty]
             public List<SelectListItem> subcategorias { get; set; }
 
             [BindProperty]
@@ -32,9 +35,29 @@ using System.Text.Json;
             [BindProperty]
             public Guid categoriaseleccionada { get; set; }
 
-            public async Task<ActionResult> OnGet()
+            public async Task<ActionResult> OnGet(Guid? Id)
             {
+            if (Id == Guid.Empty)
+                return NotFound();
+            string endpoint = _configuracion.ObtenerMetodo("ApiEndPoints", "ObtenerId");
+            var cliente = new HttpClient();
+            var solicitud = new HttpRequestMessage(HttpMethod.Get, string.Format(endpoint, id));
+
+            var respuesta = await cliente.SendAsync(solicitud);
+            respuesta.EnsureSuccessStatusCode();
+            if (respuesta.StatusCode == HttpStatusCode.OK) {
                 await ObtenerCategorias();
+                var resultado = await respuesta.Content.ReadAsStringAsync();
+                var opciones = new JsonSerializerOptions
+                { PropertyNameCaseInsensitive = true };
+                productoResponse = JsonSerializer.Deserialize<ProductoResponse>(resultado, opciones);
+                if (productoResponse != null) { 
+                    //categoriaseleccionada = productoResponse.SubCategoria
+                }
+
+                
+            }
+
                 return Page();
             }
 

@@ -20,3 +20,8 @@ html {
 body {
   margin-bottom: 60px;
 }
+.form-control {
+    display:block;
+    width: 100%;
+    pading:0.5rem 05rem;
+}
