@@ -41,7 +41,7 @@ using System.Text.Json;
                 return NotFound();
             string endpoint = _configuracion.ObtenerMetodo("ApiEndPoints", "ObtenerId");
             var cliente = new HttpClient();
-            var solicitud = new HttpRequestMessage(HttpMethod.Get, string.Format(endpoint, id));
+            var solicitud = new HttpRequestMessage(HttpMethod.Get, string.Format(endpoint, Id));
 
             var respuesta = await cliente.SendAsync(solicitud);
             respuesta.EnsureSuccessStatusCode();
@@ -51,8 +51,17 @@ using System.Text.Json;
                 var opciones = new JsonSerializerOptions
                 { PropertyNameCaseInsensitive = true };
                 productoResponse = JsonSerializer.Deserialize<ProductoResponse>(resultado, opciones);
-                if (productoResponse != null) { 
-                    //categoriaseleccionada = productoResponse.SubCategoria
+                if (productoResponse != null) {
+                    categoriaseleccionada = Guid.Parse(categorias.Where(sc => sc.Text==productoResponse.Categoria).FirstOrDefault().Value);
+                    subcategorias = (await ObtenerSubCategoriasporCategoria(categoriaseleccionada)).Select(sc =>
+                    new SelectListItem
+                    {
+                        Value = sc.Id.ToString(),
+                        Text = sc.Nombre,
+                        Selected = sc.Nombre == productoResponse.SubCategoria
+                    }
+                    ).ToList();
+                    subcategoriaseleccionada = Guid.Parse(subcategorias.Where(sc => sc.Text == productoResponse.SubCategoria).FirstOrDefault().Value);
                 }
 
                 
@@ -64,11 +73,19 @@ using System.Text.Json;
             public async Task<ActionResult> OnPost() {
                 if (!ModelState.IsValid)
                     return Page();
-            producto.IdSubCategoria = subcategoriaseleccionada;
-            string endpoint = _configuracion.ObtenerMetodo("ApiEndPoints", "Agregar");
+            productoRequest.IdSubCategoria = subcategoriaseleccionada;
+            string endpoint = _configuracion.ObtenerMetodo("ApiEndPoints", "Editar");
                 var cliente = new HttpClient();
-                var solicitud = new HttpRequestMessage(HttpMethod.Post, endpoint);
-                var respuesta = await cliente.PostAsJsonAsync(endpoint, producto);
+            // var solicitud = new HttpRequestMessage(HttpMethod.Post, endpoint);
+            var respuesta = await cliente.PutAsJsonAsync<ProductoRequest>(string.Format(endpoint, productoResponse.Id), new ProductoRequest
+            {
+                IdSubCategoria = subcategoriaseleccionada,
+                Nombre = productoResponse.Nombre,
+                Descripcion = productoResponse.Descripcion,
+                Precio = productoResponse.Precio,
+                Stock = productoResponse.Stock,
+                CodigoBarras = productoResponse.CodigoBarras
+            });
                 respuesta.EnsureSuccessStatusCode();
                 return RedirectToPage("./Index");
             }

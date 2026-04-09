@@ -14,8 +14,9 @@ BEGIN
         p.Precio,
         p.Stock,
         p.CodigoBarras,
-        c.Nombre AS NombreCategoria,
-        s.Nombre AS NombreSubCategoria
+        c.Nombre AS categoria,
+        s.Nombre AS subCategoria,
+        s.IdCategoria
     FROM Producto p
     LEFT JOIN SubCategorias s
         ON p.IdSubCategoria = s.Id

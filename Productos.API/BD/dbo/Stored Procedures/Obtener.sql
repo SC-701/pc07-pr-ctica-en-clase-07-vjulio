@@ -21,12 +21,13 @@ BEGIN
 
     SELECT
         p.*,
-        c.Nombre as NombreCategoria,
-        s.Nombre as NombreSubCategoria
+        c.Nombre as categoria,
+        s.Nombre as subCategoria,
+        s.IdCategoria
     FROM Producto p
-    LEFT JOIN Categorias c
-        ON p.Id = c.Id
     LEFT JOIN SubCategorias s
-        ON p.IdSubCategoria = s.Id;
+        ON p.IdSubCategoria = s.Id
+    LEFT JOIN Categorias c
+        ON s.IdCategoria = c.Id;
 END;
 GO
