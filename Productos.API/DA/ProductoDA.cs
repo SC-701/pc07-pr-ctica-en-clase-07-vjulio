@@ -38,13 +38,13 @@ namespace DA
             return resultadoConsulta;
         }
 
-        public async Task<Guid> Editar(Guid Id, ProductoRequest producto)
+        public async Task<Guid> Editar(Guid Idx, ProductoRequest producto)
         {
-            await verificarProductoExiste(Id);
+            await verificarProductoExiste(Idx);
             string query = @"Editar";
             var resultadoConsulta = await _sqlConection.ExecuteScalarAsync<Guid>(query, new
             {
-                Id = Guid.NewGuid(),
+                Id = Idx,
                 IdSubCategoria = producto.IdSubCategoria,
                 Nombre = producto.Nombre,
                 Descripcion = producto.Descripcion,

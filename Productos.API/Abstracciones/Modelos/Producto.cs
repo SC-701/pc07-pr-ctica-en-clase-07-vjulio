@@ -18,7 +18,6 @@ namespace Abstracciones.Modelos
 
         [Required(ErrorMessage = "El precio es obligatorio.")]
         [Range(0.01, 999999999, ErrorMessage = "El precio debe ser mayor que 0.")]
-        [RegularExpression(@"^\d+(\.\d{1,2})?$", ErrorMessage = "El precio debe tener máximo 2 decimales.")]
         public decimal Precio { get; set; }
 
         [Required(ErrorMessage = "El stock es obligatorio.")]
@@ -35,6 +34,7 @@ namespace Abstracciones.Modelos
     {
         [Required(ErrorMessage = "La subcategoría es obligatoria.")]
         public Guid IdSubCategoria { get; set; }
+        public Guid Id { get; set; }
     }
     public class ProductoRequest2 : ProductoBase
     {

@@ -20,8 +20,7 @@ using System.Text.Json;
             [BindProperty]
             public ProductoRequest productoRequest { get; set; }
         
-        [BindProperty]
-        public ProductoResponse productoResponse { get; set; }
+
 
         [BindProperty]
             public List<SelectListItem> subcategorias { get; set; }
@@ -50,18 +49,31 @@ using System.Text.Json;
                 var resultado = await respuesta.Content.ReadAsStringAsync();
                 var opciones = new JsonSerializerOptions
                 { PropertyNameCaseInsensitive = true };
-                productoResponse = JsonSerializer.Deserialize<ProductoResponse>(resultado, opciones);
-                if (productoResponse != null) {
-                    categoriaseleccionada = Guid.Parse(categorias.Where(sc => sc.Text==productoResponse.Categoria).FirstOrDefault().Value);
+                var producto = JsonSerializer.Deserialize<ProductoResponse>(resultado, opciones);
+
+                if (producto != null) {
+                    productoRequest = new ProductoRequest
+                    {
+                        Id = producto.Id,
+                        Nombre = producto.Nombre,
+                        Descripcion = producto.Descripcion,
+                        Precio = producto.Precio,
+                        Stock = producto.Stock,
+                        CodigoBarras = producto.CodigoBarras,
+                        IdSubCategoria = producto.IdSubCategoria
+                    };
+
+                    categoriaseleccionada = producto.IdCategoria;
+                    //categoriaseleccionada = Guid.Parse(categorias.Where(sc => sc.Text==productoResponse.Categoria).FirstOrDefault().Value);
                     subcategorias = (await ObtenerSubCategoriasporCategoria(categoriaseleccionada)).Select(sc =>
                     new SelectListItem
                     {
                         Value = sc.Id.ToString(),
                         Text = sc.Nombre,
-                        Selected = sc.Nombre == productoResponse.SubCategoria
+                        Selected = sc.Nombre == producto.SubCategoria
                     }
                     ).ToList();
-                    subcategoriaseleccionada = Guid.Parse(subcategorias.Where(sc => sc.Text == productoResponse.SubCategoria).FirstOrDefault().Value);
+                    subcategoriaseleccionada = producto.IdSubCategoria;
                 }
 
                 
@@ -77,16 +89,18 @@ using System.Text.Json;
             string endpoint = _configuracion.ObtenerMetodo("ApiEndPoints", "Editar");
                 var cliente = new HttpClient();
             // var solicitud = new HttpRequestMessage(HttpMethod.Post, endpoint);
-            var respuesta = await cliente.PutAsJsonAsync<ProductoRequest>(string.Format(endpoint, productoResponse.Id), new ProductoRequest
-            {
-                IdSubCategoria = subcategoriaseleccionada,
-                Nombre = productoResponse.Nombre,
-                Descripcion = productoResponse.Descripcion,
-                Precio = productoResponse.Precio,
-                Stock = productoResponse.Stock,
-                CodigoBarras = productoResponse.CodigoBarras
-            });
-                respuesta.EnsureSuccessStatusCode();
+            var respuesta = await cliente.PutAsJsonAsync(
+                string.Format(endpoint, productoRequest.Id),
+                new ProductoRequest
+                {
+                    IdSubCategoria = subcategoriaseleccionada,
+                    Nombre = productoRequest.Nombre,
+                    Descripcion = productoRequest.Descripcion,
+                    Precio = productoRequest.Precio,
+                    Stock = productoRequest.Stock,
+                    CodigoBarras = productoRequest.CodigoBarras
+                });
+            respuesta.EnsureSuccessStatusCode();
                 return RedirectToPage("./Index");
             }
 
